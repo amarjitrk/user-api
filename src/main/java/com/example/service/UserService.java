@@ -2,31 +2,33 @@ package com.example.service;
 
 import jakarta.inject.Singleton;
 import com.example.model.User;
+import com.example.repository.UserRepository;
 
-import java.util.*;
+import java.util.List;
 
 @Singleton
 public class UserService {
 
-    private Map<Long, User> users = new HashMap<>();
-    private Long idCounter = 1L;
+    private final UserRepository userRepository;
+
+    public UserService(UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
 
     public User createUser(User user){
-        user.setId(idCounter++);
-        users.put(user.getId(), user);
-        return user;
+        return userRepository.save(user);
     }
 
     public List<User> getAllUsers() {
-        return new ArrayList<>(users.values());
+        return userRepository.findAll().stream().toList();
     }
 
     public User getUser(Long id) {
-        return users.get(id);
+        return userRepository.findById(id).orElse(null);
     }
 
     public void deleteUser(Long id) {
-        users.remove(id);
+        userRepository.deleteById(id);
     }
 
 }

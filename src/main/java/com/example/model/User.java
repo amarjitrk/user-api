@@ -1,11 +1,19 @@
 package com.example.model;
 
+import io.micronaut.core.annotation.Introspected;
 import io.micronaut.serde.annotation.Serdeable;
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotBlank;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
+import jakarta.validation.constraints.*;
 
+@Introspected
 @Serdeable
+@Entity
 public class User {
+
+    @Id
+    @GeneratedValue
     private Long id;
 
     @NotBlank
